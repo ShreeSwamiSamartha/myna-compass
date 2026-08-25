@@ -7,28 +7,29 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { DecisionLog } from "../components/decision-log";
+
+const tabs = [
+  { to: "/", label: "Executive" },
+  { to: "/journey", label: "Journey" },
+  { to: "/roadmap", label: "Roadmap Decision Engine" },
+  { to: "/data-confidence", label: "Data Confidence" },
+  { to: "/donor-impact", label: "Donor / Impact" },
+] as const;
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+        <h1 className="text-5xl">404</h1>
+        <p className="mt-3 text-sm text-muted-foreground">This page doesn't exist.</p>
+        <Link to="/" className="mt-6 inline-block label-caps text-primary">
+          Back to Executive
+        </Link>
       </div>
     </div>
   );
@@ -42,31 +43,18 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
-        </div>
+        <h1 className="text-2xl">This page didn't load</h1>
+        <button
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
+          className="mt-6 rounded-sm bg-primary px-4 py-2 text-sm text-primary-foreground"
+        >
+          Try again
+        </button>
       </div>
     </div>
   );
@@ -77,19 +65,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Myna Product Decision & Impact System" },
+      {
+        name: "description",
+        content:
+          "A product decision system connecting field reality, donor commitments, engineering constraints, measurement and privacy.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -116,11 +107,58 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [logOpen, setLogOpen] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen bg-background">
+        <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4 md:px-10">
+            <div>
+              <p className="label-caps text-primary">Myna Mahila Foundation</p>
+              <p className="font-serif text-lg leading-tight">
+                Product Decision &amp; Impact System
+              </p>
+            </div>
+            <button
+              onClick={() => setLogOpen(true)}
+              className="rounded-sm border border-border px-3 py-1.5 label-caps text-muted-foreground transition-colors hover:bg-secondary"
+            >
+              Decision Log
+            </button>
+          </div>
+          <nav className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 md:px-8">
+            {tabs.map((t) => (
+              <Link
+                key={t.to}
+                to={t.to}
+                activeOptions={{ exact: t.to === "/" }}
+                className="whitespace-nowrap border-b-2 border-transparent px-3 py-3 label-caps text-muted-foreground transition-colors hover:text-foreground data-[status=active]:border-primary data-[status=active]:text-foreground"
+              >
+                {t.label}
+              </Link>
+            ))}
+          </nav>
+        </header>
+
+        <main>
+          <Outlet />
+        </main>
+
+        <footer className="border-t border-border bg-surface">
+          <div className="mx-auto max-w-6xl px-6 py-10 md:px-10">
+            <p className="label-caps text-muted-foreground">Prototype status</p>
+            <p className="mt-2 max-w-2xl font-serif text-xl">
+              Strategic framework — not connected to Myna production data.
+            </p>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Field reality + donor reality + engineering reality + product strategy +
+              measurement + privacy = better product decisions.
+            </p>
+          </div>
+        </footer>
+      </div>
+      {logOpen ? <DecisionLog onClose={() => setLogOpen(false)} /> : null}
     </QueryClientProvider>
   );
 }
