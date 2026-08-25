@@ -10,33 +10,80 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DataConfidenceRouteImport } from './routes/data-confidence'
+import { Route as DonorImpactRouteImport } from './routes/donor-impact'
+import { Route as JourneyRouteImport } from './routes/journey'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DataConfidenceRoute = DataConfidenceRouteImport.update({
+  id: '/data-confidence',
+  path: '/data-confidence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonorImpactRoute = DonorImpactRouteImport.update({
+  id: '/donor-impact',
+  path: '/donor-impact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JourneyRoute = JourneyRouteImport.update({
+  id: '/journey',
+  path: '/journey',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/data-confidence': typeof DataConfidenceRoute
+  '/donor-impact': typeof DonorImpactRoute
+  '/journey': typeof JourneyRoute
+  '/roadmap': typeof RoadmapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/data-confidence': typeof DataConfidenceRoute
+  '/donor-impact': typeof DonorImpactRoute
+  '/journey': typeof JourneyRoute
+  '/roadmap': typeof RoadmapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/data-confidence': typeof DataConfidenceRoute
+  '/donor-impact': typeof DonorImpactRoute
+  '/journey': typeof JourneyRoute
+  '/roadmap': typeof RoadmapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/data-confidence' | '/donor-impact' | '/journey' | '/roadmap'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/data-confidence' | '/donor-impact' | '/journey' | '/roadmap'
+  id:
+    | '__root__'
+    | '/'
+    | '/data-confidence'
+    | '/donor-impact'
+    | '/journey'
+    | '/roadmap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DataConfidenceRoute: typeof DataConfidenceRoute
+  DonorImpactRoute: typeof DonorImpactRoute
+  JourneyRoute: typeof JourneyRoute
+  RoadmapRoute: typeof RoadmapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +95,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/data-confidence': {
+      id: '/data-confidence'
+      path: '/data-confidence'
+      fullPath: '/data-confidence'
+      preLoaderRoute: typeof DataConfidenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donor-impact': {
+      id: '/donor-impact'
+      path: '/donor-impact'
+      fullPath: '/donor-impact'
+      preLoaderRoute: typeof DonorImpactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journey': {
+      id: '/journey'
+      path: '/journey'
+      fullPath: '/journey'
+      preLoaderRoute: typeof JourneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DataConfidenceRoute: DataConfidenceRoute,
+  DonorImpactRoute: DonorImpactRoute,
+  JourneyRoute: JourneyRoute,
+  RoadmapRoute: RoadmapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
