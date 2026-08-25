@@ -76,12 +76,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap",
-      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
@@ -112,11 +106,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
-        <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4 md:px-10">
+        <header className="sticky top-0 z-40 border-b border-border bg-background">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4 md:px-12">
             <div>
               <p className="label-caps text-primary">Myna Mahila Foundation</p>
-              <p className="font-serif text-lg leading-tight">
+              <p className="text-lg font-semibold leading-tight tracking-tight">
                 Product Decision &amp; Impact System
               </p>
             </div>
@@ -127,13 +121,13 @@ function RootComponent() {
               Decision Log
             </button>
           </div>
-          <nav className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-4 md:px-8">
+          <nav className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 md:px-10">
             {tabs.map((t) => (
               <Link
                 key={t.to}
                 to={t.to}
                 activeOptions={{ exact: t.to === "/" }}
-                className="whitespace-nowrap border-b-2 border-transparent px-3 py-3 label-caps text-muted-foreground transition-colors hover:text-foreground data-[status=active]:border-primary data-[status=active]:text-foreground"
+                className="whitespace-nowrap border-b-2 border-transparent px-3 py-3 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground data-[status=active]:border-primary data-[status=active]:text-foreground"
               >
                 {t.label}
               </Link>
@@ -146,14 +140,14 @@ function RootComponent() {
         </main>
 
         <footer className="border-t border-border bg-surface">
-          <div className="mx-auto max-w-6xl px-6 py-10 md:px-10">
+          <div className="mx-auto max-w-7xl px-6 py-12 md:px-12">
             <p className="label-caps text-muted-foreground">Prototype status</p>
-            <p className="mt-2 max-w-2xl font-serif text-xl">
+            <p className="mt-2 max-w-2xl text-xl font-medium tracking-tight">
               Strategic framework — not connected to Myna production data.
             </p>
             <p className="mt-4 text-sm text-muted-foreground">
-              Field reality + donor reality + engineering reality + product strategy +
-              measurement + privacy = better product decisions.
+              Field reality + donor reality + engineering reality + product strategy + measurement +
+              privacy = better product decisions.
             </p>
           </div>
         </footer>

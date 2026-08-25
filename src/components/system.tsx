@@ -10,13 +10,7 @@ const evidenceStyles: Record<Evidence, string> = {
   illustrative: "border-primary/30 text-primary bg-primary/6",
 };
 
-export function Tag({
-  kind = "missing",
-  children,
-}: {
-  kind?: Evidence;
-  children: ReactNode;
-}) {
+export function Tag({ kind = "missing", children }: { kind?: Evidence; children: ReactNode }) {
   return (
     <span
       className={`inline-flex items-center rounded-sm border px-1.5 py-0.5 label-caps ${evidenceStyles[kind]}`}
@@ -38,15 +32,15 @@ export function Page({
   children: ReactNode;
 }) {
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-16">
+    <div className="mx-auto w-full max-w-7xl px-6 py-14 md:px-12 md:py-20">
       <header className="max-w-3xl">
         {eyebrow ? <p className="label-caps text-primary">{eyebrow}</p> : null}
-        <h1 className="mt-3 text-3xl leading-tight md:text-5xl">{title}</h1>
+        <h1 className="mt-3 text-3xl leading-tight md:text-5xl md:tracking-[-0.035em]">{title}</h1>
         {subtitle ? (
           <p className="mt-4 text-base text-muted-foreground md:text-lg">{subtitle}</p>
         ) : null}
       </header>
-      <div className="mt-12 space-y-14">{children}</div>
+      <div className="mt-16 space-y-20">{children}</div>
     </div>
   );
 }
@@ -61,8 +55,8 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="space-y-5">
-      <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-3">
+    <section className="space-y-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-4">
         <h2 className="text-xl md:text-2xl">{title}</h2>
         {note ? <p className="text-sm text-muted-foreground">{note}</p> : null}
       </div>
@@ -71,15 +65,9 @@ export function Section({
   );
 }
 
-export function Card({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`rounded-lg border border-border bg-card p-5 ${className}`}>{children}</div>
+    <div className={`rounded-md border border-border bg-card p-6 ${className}`}>{children}</div>
   );
 }
 
@@ -98,7 +86,7 @@ export function Kpi({
     <Card className="flex flex-col justify-between gap-4">
       <p className="label-caps text-muted-foreground">{label}</p>
       <div>
-        <p className="font-serif text-3xl text-foreground/85">{value}</p>
+        <p className="text-3xl font-semibold tracking-tight text-foreground">{value}</p>
         <p className="mt-1 text-sm text-muted-foreground">{caption}</p>
       </div>
       <Tag kind={kind}>{kind === "missing" ? "Data required" : kind}</Tag>
@@ -131,13 +119,7 @@ export function Flow({
   );
 }
 
-export function Table({
-  headers,
-  rows,
-}: {
-  headers: string[];
-  rows: ReactNode[][];
-}) {
+export function Table({ headers, rows }: { headers: string[]; rows: ReactNode[][] }) {
   return (
     <div className="overflow-x-auto rounded-lg border border-border bg-card">
       <table className="w-full min-w-[720px] border-collapse text-sm">
@@ -171,8 +153,8 @@ export function Table({
 
 export function Principle({ children }: { children: ReactNode }) {
   return (
-    <blockquote className="rounded-lg border-l-2 border-primary bg-secondary/50 px-6 py-5">
-      <p className="font-serif text-xl leading-snug md:text-2xl">{children}</p>
+    <blockquote className="border-l-2 border-primary bg-secondary/60 px-6 py-5">
+      <p className="text-xl font-medium leading-snug md:text-2xl">{children}</p>
     </blockquote>
   );
 }
@@ -189,9 +171,7 @@ const decisionStyles: Record<DecisionState, string> = {
 
 export function Decision({ state }: { state: DecisionState }) {
   return (
-    <span
-      className={`inline-flex rounded-sm px-2 py-1 label-caps ${decisionStyles[state]}`}
-    >
+    <span className={`inline-flex rounded-sm px-2 py-1 label-caps ${decisionStyles[state]}`}>
       {state}
     </span>
   );

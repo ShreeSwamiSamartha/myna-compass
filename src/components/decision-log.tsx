@@ -30,7 +30,7 @@ export function DecisionLog({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-foreground/20" onClick={onClose}>
       <aside
-        className="h-full w-full max-w-3xl overflow-y-auto bg-background p-8 shadow-xl"
+        className="h-full w-full max-w-3xl overflow-y-auto border-l border-border bg-background p-8 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-6">
@@ -38,8 +38,8 @@ export function DecisionLog({ onClose }: { onClose: () => void }) {
             <p className="label-caps text-primary">Cross-system</p>
             <h2 className="mt-2 text-3xl">Decision Log</h2>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-              A durable record of what was decided, on what evidence, and when it will be
-              reviewed. Entries below are illustrative.
+              A durable record of what was decided, on what evidence, and when it will be reviewed.
+              Entries below are illustrative.
             </p>
           </div>
           <button
@@ -58,7 +58,7 @@ export function DecisionLog({ onClose }: { onClose: () => void }) {
           {entries.map((e) => (
             <div key={e.decision} className="rounded-lg border border-border bg-card p-5">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="font-serif text-xl">{e.decision}</h3>
+                <h3 className="text-xl font-semibold tracking-tight">{e.decision}</h3>
                 <span className="label-caps text-muted-foreground">Date: {e.date}</span>
               </div>
               <dl className="mt-4 grid gap-4 sm:grid-cols-2">
